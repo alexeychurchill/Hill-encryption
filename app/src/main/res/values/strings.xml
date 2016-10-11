@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Hill encryption</string>
+    <string name="text_open_file">Open file</string>
+    <string name="text_filler">…</string>
+    <string name="text_encoding">Encoding</string>
+    <string name="text_encode">Encode</string>
+    <string name="text_decode">Decode</string>
+    <string name="text_proceed">Proceed</string>
+    <string name="text_key">Key:</string>
+    <string name="hint_your_key">your key</string>
 </resources>
