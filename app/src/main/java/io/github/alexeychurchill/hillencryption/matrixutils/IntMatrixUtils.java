@@ -123,7 +123,7 @@ public class IntMatrixUtils {
         return ((i + j + 2) % 2 == 0) ? 1 : -1;
     }
 
-    public static int[][] inverseByMod(int[][] matrix, int m) {
+    public static int[][] inverseByMod(int[][] matrix, int m, int pNMax) {
         if (matrix.length < 1 || matrix[0].length < 1) {
             throw new IndexOutOfBoundsException("Wrong matrix size");
         }
@@ -131,15 +131,20 @@ public class IntMatrixUtils {
         if (matrixDet == 0) {
             return null;
         }
-        if (!NumberUtils.isInverseByModExists(matrixDet, m)) {
-            return null;
-        }
         matrixDet = NumberUtils.mod(matrixDet, m);
-        matrixDet = NumberUtils.inverseByMod(matrixDet, m);
-        int[][] result = IntMatrixUtils.transpose(IntMatrixUtils.allied(matrix));
-        for (int i = 0; i < result.length; i++) {
-            for (int j = 0; j < result[i].length; j++) {
-                result[i][j] = NumberUtils.mod(result[i][j] * matrixDet, m);
+        int[][] alliedTransposed = IntMatrixUtils.transpose(IntMatrixUtils.allied(matrix));
+        int[][] result = new int[matrix.length][matrix[0].length];
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[i].length; j++) {
+                int p = 0;
+                while (((m * p + alliedTransposed[i][j]) % matrixDet != 0) && (p <= pNMax)) {
+                    p++;
+                }
+                if (p <= pNMax) {
+                    result[i][j] = NumberUtils.mod(((m * p + alliedTransposed[i][j]) / matrixDet), m);
+                } else {
+                    return null;
+                }
             }
         }
         return result;

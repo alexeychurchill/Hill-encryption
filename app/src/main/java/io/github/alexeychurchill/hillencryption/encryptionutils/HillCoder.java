@@ -1,5 +1,8 @@
 package io.github.alexeychurchill.hillencryption.encryptionutils;
 
+import android.util.Log;
+
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -11,10 +14,11 @@ import io.github.alexeychurchill.hillencryption.matrixutils.NumberUtils;
  */
 
 public class HillCoder {
+    public static final int P_NMAX = 10000;
     private Alphabet alphabet = new UkrainianAlphabet();
     private String key = null;
     private int[][] keyMatrix = null;
-    private int keyMatrixSize = 3;
+    private int keyMatrixSize = 5;
     private char paddingChar = '~';
 
     public char getPaddingChar() {
@@ -46,6 +50,14 @@ public class HillCoder {
         buildKey();
     }
 
+    public int[][] getEncodeKeyMatrix() {
+        return keyMatrix;
+    }
+
+    public int[][] getDecodeKeyMatrix() {
+        return decodeMatrix(keyMatrix);
+    }
+
     public String encode(String source) {
         if (keyMatrix == null) {
             return null;
@@ -54,7 +66,7 @@ public class HillCoder {
             return null;
         }
         int det = IntMatrixUtils.det(keyMatrix);
-        if (det == 0 || !NumberUtils.isInverseByModExists(det, alphabet.length())) {
+        if (det == 0 || IntMatrixUtils.inverseByMod(keyMatrix, alphabet.length(), P_NMAX) == null) {
             return null;
         }
         StringBuilder builder = new StringBuilder();
@@ -91,7 +103,7 @@ public class HillCoder {
     }
 
     private int[][] decodeMatrix(int[][] keyMatrix) {
-        return IntMatrixUtils.inverseByMod(keyMatrix, alphabet.length());
+        return IntMatrixUtils.inverseByMod(keyMatrix, alphabet.length(), P_NMAX);
     }
 
     private String matrixToChunk(int[][] encodedChunkMatrix) {

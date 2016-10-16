@@ -3,6 +3,7 @@ package io.github.alexeychurchill.hillencryption;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioGroup;
@@ -19,6 +20,7 @@ import java.util.Scanner;
 
 import io.github.alexeychurchill.hillencryption.encryptionutils.HillCoder;
 import io.github.alexeychurchill.hillencryption.filebrowser.OpenFileActivity;
+import io.github.alexeychurchill.hillencryption.matrixutils.IntMatrixUtils;
 
 public class EnterDataActivity extends AppCompatActivity {
     private static final int REQ_CODE_OPEN_FILE = 1;
@@ -62,7 +64,7 @@ public class EnterDataActivity extends AppCompatActivity {
             while (scanner.hasNextLine()) {
                 builder.append(scanner.nextLine());
             }
-            mInput = builder.toString().replace("\r", "").replace("\n", " ").replace("  ", " ");
+            mInput = builder.toString();
             inputStream.close();
         } catch (FileNotFoundException e) {
             Toast.makeText(this, "File not found", Toast.LENGTH_SHORT)

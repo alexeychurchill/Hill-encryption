@@ -26,6 +26,6 @@ public class NumberUtils {
 
     public static int mod(int a, int m) {
         int mod = a % m;
-        return (mod > 0) ? mod : m + mod;
+        return (mod >= 0) ? mod : m + mod;
     }
 }
