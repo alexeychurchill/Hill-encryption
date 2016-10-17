@@ -92,17 +92,9 @@ public class EnterDataActivity extends AppCompatActivity {
     }
 
     private void callDecode() {
-        EditText etKey = ((EditText) findViewById(R.id.etKey));
-        if (etKey == null) {
+        if (!setCoderKey()) {
             return;
         }
-        String key = etKey.getText().toString();
-        if (key.isEmpty()) {
-            Toast.makeText(this, "Empty key!", Toast.LENGTH_SHORT)
-                    .show();
-            return;
-        }
-        mHillCoder.setKey(key);
         mOutput = mHillCoder.decode(mInput);
         if (mOutput == null) {
             Toast.makeText(this, "Decode error!", Toast.LENGTH_SHORT)
@@ -115,17 +107,9 @@ public class EnterDataActivity extends AppCompatActivity {
     }
 
     private void callEncode() {
-        EditText etKey = ((EditText) findViewById(R.id.etKey));
-        if (etKey == null) {
+        if (!setCoderKey()) {
             return;
         }
-        String key = etKey.getText().toString();
-        if (key.isEmpty()) {
-            Toast.makeText(this, "Empty key!", Toast.LENGTH_SHORT)
-                    .show();
-            return;
-        }
-        mHillCoder.setKey(key);
         mOutput = mHillCoder.encode(mInput);
         if (mOutput == null) {
             Toast.makeText(this, "Encode error!", Toast.LENGTH_SHORT)
@@ -151,5 +135,50 @@ public class EnterDataActivity extends AppCompatActivity {
         }
         Toast.makeText(this, "Saved", Toast.LENGTH_SHORT)
                 .show();
+    }
+
+    private boolean setCoderKey() {
+        EditText etKey = ((EditText) findViewById(R.id.etKey));
+        if (etKey == null) {
+            return false;
+        }
+        String key = etKey.getText().toString();
+        if (key.isEmpty()) {
+            Toast.makeText(this, "Empty key!", Toast.LENGTH_SHORT)
+                    .show();
+            return false;
+        }
+        mHillCoder.setKey(key);
+        return true;
+    }
+
+    public void btnOnShowEncryptionMatrix(View view) {
+        if (!setCoderKey()) {
+            return;
+        }
+        int[][] keyMatrix = mHillCoder.getEncodeKeyMatrix();
+        showMatrix(keyMatrix);
+    }
+
+    public void btnOnShowDecryptionMatrix(View view) {
+        if (!setCoderKey()) {
+            return;
+        }
+        int[][] decodeKeyMatrix = mHillCoder.getDecodeKeyMatrix();
+        if (decodeKeyMatrix == null) {
+            Toast.makeText(this, "Not exists!", Toast.LENGTH_SHORT)
+                    .show();
+            return;
+        }
+        showMatrix(decodeKeyMatrix);
+    }
+
+    private void showMatrix(int[][] matrix) {
+        if (matrix == null) {
+            return;
+        }
+        ShowMatrixDialogFragment dialogFragment = new ShowMatrixDialogFragment();
+        dialogFragment.setData(matrix);
+        dialogFragment.show(getSupportFragmentManager(), "ShowMatrixDialogFragment");
     }
 }

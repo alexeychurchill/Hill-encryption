@@ -7,5 +7,9 @@
     <string name="text_decode">Decode</string>
     <string name="text_proceed">Proceed</string>
     <string name="text_key">Key:</string>
+    <string name="text_matrix">Show key matrix: </string>
     <string name="hint_your_key">your key</string>
+    <string name="text_encryption">Encryption</string>
+    <string name="text_decryption">Decryption</string>
+    <string name="text_ok">OK</string>
 </resources>

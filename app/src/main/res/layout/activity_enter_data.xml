@@ -47,4 +47,28 @@
         android:layout_height="wrap_content"
         android:text="@string/text_proceed"
         android:onClick="btnProceedOnClick"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/text_matrix"/>
+    <LinearLayout
+        style="?android:buttonBarStyle"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            style="?android:buttonBarButtonStyle"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="@string/text_encryption"
+            android:onClick="btnOnShowEncryptionMatrix"/>
+        <Button
+            style="?android:buttonBarButtonStyle"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="@string/text_decryption"
+            android:onClick="btnOnShowDecryptionMatrix"/>
+    </LinearLayout>
 </LinearLayout>
